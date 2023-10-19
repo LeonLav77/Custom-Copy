@@ -1,14 +1,15 @@
 #!/bin/bash
 
-if [ $# -ne 4 ]; then
-    echo "Usage: $0 <copiedFile> <numberOfBytesCopied> <num_iterations> <filename>"
+if [ $# -ne 5 ]; then
+    echo "Usage: $0 <copiedFile> <copiedFileDestination> <numberOfBytesCopied> <num_iterations> <filename>"
     exit 1
 fi
 
 copiedFile="$1"
-numberOfBytesCopied="$2"
-num_iterations="$3"
-file_name="$4"  # No spaces around the =
+copiedFileDestination="$2"
+numberOfBytesCopied="$3"
+num_iterations="$4"
+file_name="$5"
 
 # Compile the C program (add error checking)
 if ! gcc -o copy "$file_name"; then
@@ -23,7 +24,7 @@ output_file="${copiedFile}_execution_times_${numberOfBytesCopied}.txt"
 
 for ((i = 1; i <= num_iterations; i++)); do
     # Measure the execution time of the C program
-    exec_time=$( /usr/bin/time -f "%e" -o "$output_file" -a ./copy "$copiedFile" "$numberOfBytesCopied" 2>&1 )
+    exec_time=$( /usr/bin/time -f "%e" -o "$output_file" -a ./copy "$copiedFile" "$copiedFileDestination" "$numberOfBytesCopied" 2>&1 )
     echo "Iteration $i: Execution time = $exec_time"
 done
 

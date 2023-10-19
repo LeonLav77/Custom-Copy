@@ -5,25 +5,6 @@
 #include <fcntl.h> 
 #include <unistd.h> 
 
-void modifyFileName(const char *originalFileName, char *newFileName) {
-    // Find the last dot in the originalFileName
-    const char *lastDot = strrchr(originalFileName, '.');
-
-    if (lastDot != NULL) {
-        // Copy the part of the originalFileName up to the last dot into newFileName
-        strncpy(newFileName, originalFileName, lastDot - originalFileName);
-        newFileName[lastDot - originalFileName] = '\0'; // Ensure null-termination
-
-        // Append "_copy" and the portion of the originalFileName after the dot to newFileName
-        strcat(newFileName, "_copy");
-        strcat(newFileName, lastDot);
-    } else {
-        // If there's no dot in the originalFileName, just append "_copy" to the end
-        strcpy(newFileName, originalFileName);
-        strcat(newFileName, "_copy");
-    }
-}
-
 int main(int argc, char* argv[]) {
     if (argc < 2) {
         printf("\n\nNo argument passed through the command line!");
@@ -32,9 +13,10 @@ int main(int argc, char* argv[]) {
     char fileName[256]; // Assuming a maximum filename length of 255 characters
     char newFileName[256];
     strcpy(fileName, argv[1]);
+    strcpy(newFileName, argv[2]);
 
-    int bufferSize = atoi(argv[2]);
-    modifyFileName(fileName, newFileName);
+
+    int bufferSize = atoi(argv[3]);
 
     unsigned char buffer[bufferSize]; // Use the provided buffer size
 
