@@ -13,6 +13,6 @@ for ((i = 0; i < filesBySizeLength; i++)); do
 
     for ((j = 0; j < numberOfBytesLength; j++)); do
         currentNumberOfBytes=$((numberOfBytes[j] * 1024))
-        /bin/bash runAndTime.sh "$currentFileName" "$currentFileNameDestination" $currentNumberOfBytes 1 $programName
+        /bin/bash runAndTime.sh "$currentFileName" "$currentFileNameDestination" $currentNumberOfBytes 20 $programName
     done
 done
