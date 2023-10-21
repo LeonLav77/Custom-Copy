@@ -24,14 +24,9 @@ output_file="${copiedFile}_execution_times_${numberOfBytesCopied}.txt"
 
 for ((i = 1; i <= num_iterations; i++)); do
     # Measure the execution time of the C program
-    exec_time=$( /usr/bin/time -f "%e" -o "$output_file" -a ./copy "$copiedFile" "$copiedFileDestination" "$numberOfBytesCopied" 2>&1 )
+    exec_time=$(
+        /usr/bin/time -f "%e" -o "$output_file" -a \
+        ./copy "$copiedFile" "$copiedFileDestination" "$numberOfBytesCopied" 2>&1
+    )
     echo "Iteration $i: Execution time = $exec_time"
 done
-
-echo "Execution times for $num_iterations iterations saved to $output_file"
-
-# Calculate the average execution time
-total_time=$(awk '{ sum += $1 } END { print sum }' "$output_file")
-average_time=$(echo "scale=4; $total_time / $num_iterations" | bc)
-
-echo "Average Execution Time for $num_iterations iterations: $average_time seconds"
